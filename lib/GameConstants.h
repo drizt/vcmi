@@ -1068,6 +1068,26 @@ enum class ESpellSchool: ui8
 	EARTH 	= 3
 };
 
+enum class EMetaclass: ui8
+{
+	INVALID = 0,
+	ARTIFACT,
+	CREATURE,
+	FACTION,
+	EXPERIENCE,
+	HERO,
+	HEROCLASS,
+	LUCK,
+	MANA,
+	MORALE,
+	MOVEMENT,
+	OBJECT,
+	PRIMARY_SKILL,
+	SECONDARY_SKILL,
+	SPELL,
+	RESOURCE
+};
+
 // Typedef declarations
 typedef ui8 TFaction;
 typedef si64 TExpType;
