@@ -385,6 +385,12 @@ void CMapFormatJson::serializeHeader(JsonSerializeFormat & handler)
 	serializePlayerInfo(handler);
 
 	handler.serializeLIC("allowedHeroes", &CHeroHandler::decodeHero, &CHeroHandler::encodeHero, VLC->heroh->getDefaultAllowed(), mapHeader->allowedHeroes);
+
+	handler.serializeString("victoryString", mapHeader->victoryMessage);
+	handler.serializeInt("victoryIconIndex", mapHeader->victoryIconIndex);
+
+	handler.serializeString("defeatString", mapHeader->defeatMessage);
+	handler.serializeInt("defeatIconIndex", mapHeader->defeatIconIndex);
 }
 
 void CMapFormatJson::serializePlayerInfo(JsonSerializeFormat & handler)
@@ -586,20 +592,9 @@ void CMapFormatJson::writeTeams(JsonSerializer & handler)
 	}
 }
 
-void CMapFormatJson::serializeTriggeredEvents(JsonSerializeFormat & handler)
-{
-	handler.serializeString("victoryString", mapHeader->victoryMessage);
-	handler.serializeInt("victoryIconIndex", mapHeader->victoryIconIndex);
-
-	handler.serializeString("defeatString", mapHeader->defeatMessage);
-	handler.serializeInt("defeatIconIndex", mapHeader->defeatIconIndex);
-}
-
 void CMapFormatJson::readTriggeredEvents(JsonDeserializer & handler)
 {
 	const JsonNode & input = handler.getCurrent();
-
-	serializeTriggeredEvents(handler);
 
 	mapHeader->triggeredEvents.clear();
 
@@ -626,8 +621,6 @@ void CMapFormatJson::readTriggeredEvent(TriggeredEvent & event, const JsonNode &
 void CMapFormatJson::writeTriggeredEvents(JsonSerializer & handler)
 {
 	JsonNode & output = handler.getCurrent();
-
-	serializeTriggeredEvents(handler);
 
 	JsonMap & triggeredEvents = output["triggeredEvents"].Struct();
 
